@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
-import email_icon from "./assets/email.png";
-import password_icon from "./assets/password.png";
+
+import email_icon from '../assets/email.png';
+import password_icon from '../assets/password.png';
 import "./AuthForm.css";
 
 function validatePassWord(password, confirmPassword) {
@@ -26,15 +27,21 @@ const Signup = () => {
     e.preventDefault();
     const email = enteredEmail.current.value;
     const password = enteredPassword.current.value;
-    const confirmPassword = enteredConfirmPassword.current.value;
+    let confirmPassword;
+    if(action==='Sign Up') confirmPassword = enteredConfirmPassword.current.value;
     setIsLoading(true);
     try {
       if (!validateEmail(email)) {
         alert(`Please enter valid Email`);
-      } else if (!validatePassWord(password, confirmPassword)) {
+      } else if (action === 'Sign Up' && !validatePassWord(password, confirmPassword)) {
         alert(`Please enter valid Password`);
       } else {
-        let url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyC8IykqejjI79ePKYsCrYciX6Vs8G6nySI`;
+        let url;
+        if(action === 'Sign Up') {
+          url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyC8IykqejjI79ePKYsCrYciX6Vs8G6nySI`;
+        }else {
+          url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyC8IykqejjI79ePKYsCrYciX6Vs8G6nySI`
+        }
         const res = await fetch(url, {
           method: "POST",
           body: JSON.stringify({
@@ -46,21 +53,25 @@ const Signup = () => {
             "content-type": "application/json",
           },
         });
-        if (res.ok) {
+        if (res.ok && action === 'Sign Up') {
           alert(`Successfully created your account`);
+        }else if(res.ok && action === 'Login') {
+          alert(`Successfully Logged in`)
         } else {
           const errorData = await res.json();
+          console.log('error')
           throw new Error(errorData.error.message);
+          
         }
         const data = await res.json();
         console.log("successful", data);
         enteredEmail.current.value = "";
         enteredPassword.current.value = "";
       }
-      enteredConfirmPassword.current.value = "";
+      if(action === 'Sign Up') enteredConfirmPassword.current.value = "";
     } catch (err) {
-      alert(`Signing Failed`);
-      console.log(err);
+      alert(err.message);
+      console.log(err.message);
     }
     setIsLoading(false);
   };
