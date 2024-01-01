@@ -10,12 +10,35 @@
   padding: 14px 16px;
   text-decoration: none;
   font-size: 17px;
+  padding-top: 25px;
+  padding-bottom: 25px;
 }
 .topnav a:hover {
-  background-color: #ddd;
-  color: black;
+  font-weight: bold;
+  text-decoration: underline;
 }
 .topnav a.active {
-  background-color: #04aa6d;
+  text-decoration: underline;
+}
+
+.topnava {
+  color: white;
+  text-align: right;
+  margin: 15px;
+}
+
+.topnavspan {
+  color: lightblue;
+  text-decoration: underline;
+}
+
+.topnav p {
+  padding-right: 15px;
+}
+
+.topnavright {
+  display: flex;
+  justify-content: right;
+  padding: 10px;
   color: white;
 }

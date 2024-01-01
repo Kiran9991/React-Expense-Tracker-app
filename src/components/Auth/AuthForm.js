@@ -1,8 +1,10 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 
 import email_icon from '../assets/email.png';
 import password_icon from '../assets/password.png';
 import "./AuthForm.css";
+import AuthContext from "../store/auth-context";
+import { useHistory } from "react-router-dom";
 
 function validatePassWord(password, confirmPassword) {
   if (password.length < 6 || password !== confirmPassword) return false;
@@ -19,6 +21,8 @@ function validateEmail(email) {
 const Signup = () => {
   const [action, setAction] = useState("Sign Up");
   const [loading, setIsLoading] = useState(false);
+  const authCtx = useContext(AuthContext);
+  const history = useHistory();
   const enteredEmail = useRef();
   const enteredPassword = useRef();
   const enteredConfirmPassword = useRef();
@@ -53,17 +57,18 @@ const Signup = () => {
             "content-type": "application/json",
           },
         });
+        const data = await res.json();
         if (res.ok && action === 'Sign Up') {
           alert(`Successfully created your account`);
         }else if(res.ok && action === 'Login') {
           alert(`Successfully Logged in`)
+          authCtx.login(data.idToken)
+          history.replace('/home')
         } else {
           const errorData = await res.json();
           console.log('error')
           throw new Error(errorData.error.message);
-          
         }
-        const data = await res.json();
         console.log("successful", data);
         enteredEmail.current.value = "";
         enteredPassword.current.value = "";
