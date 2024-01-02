@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+
 import "./ProfileDetails.css";
 import Modal from "../UI/Modal";
 
@@ -17,8 +18,8 @@ const ProfileDetails = (props) => {
         method: 'POST',
         body: JSON.stringify({
           idToken,
-          fullName,
-          profilePhotoUrl,
+          displayName: fullName,
+          photoUrl: profilePhotoUrl,
           returnSecureToken: true
         }),
         headers : {
@@ -31,7 +32,8 @@ const ProfileDetails = (props) => {
       }
       alert(`Successfully updated Your Profile`)
       const data = await res.json();
-      console.log('successful', data);
+      console.log('successfully updated profile data', data);
+      props.closeModal();
     }catch(err) {
       alert(err.message)
       console.log(err);
@@ -44,7 +46,7 @@ const ProfileDetails = (props) => {
       <div className="modal-content">
         <div className="modal-header">
           <span className="close" onClick={props.closeModal}>
-            &times;
+            Cancel
           </span>
           <h2>Profile Details</h2>
         </div>

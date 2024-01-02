@@ -34,6 +34,7 @@
 
 .topnav p {
   padding-right: 15px;
+  font-style: oblique;
 }
 
 .topnavright {
@@ -41,4 +42,11 @@
   justify-content: right;
   padding: 10px;
   color: white;
+}
+
+.profile {
+  vertical-align: middle;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
 }
