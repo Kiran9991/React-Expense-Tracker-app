@@ -27,12 +27,12 @@ const ProfileDetails = (props) => {
         }
       })
       if(!res.ok) {
-        console.log(await res.json())
         throw new Error(`Profile update failed`)
       }
       alert(`Successfully updated Your Profile`)
       const data = await res.json();
-      console.log('successfully updated profile data', data);
+      // console.log('successfully updated profile data', data);
+      props.sendProfiledata(data.displayName, data.photoUrl)
       props.closeModal();
     }catch(err) {
       alert(err.message)
@@ -57,7 +57,7 @@ const ProfileDetails = (props) => {
           </div>
           <div>
             <label>Profile Photo Url:</label>
-            <input type="text" ref={profilePhotoRef} />
+            <input type="url" ref={profilePhotoRef} />
           </div>
         </div>
         <div className="modal-footer">

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { NavLink, useHistory } from "react-router-dom";
 
 import "./MainNavigation.css";
@@ -10,6 +10,7 @@ const MainNavigation = () => {
   const authCtx = useContext(AuthContext);
   const history = useHistory();
   const idToken = localStorage.getItem("token");
+  const [ profileData, setProfileData ] = useState({});
   let content;
 
   const showModalHandler = () => setShowModal(true);
@@ -34,35 +35,40 @@ const MainNavigation = () => {
         }
       );
       const data = await res.json();
-      console.log("profile data", data);
-      const profileObj = {
+      // console.log("profile data", data);
+      setProfileData({
         userName:data.users[0].displayName,
         url:data.users[0].photoUrl
-      }
-      localStorage.setItem('profileObj', JSON.stringify(profileObj));
+      })
     }
     if(idToken) {
       getProfileUpdateDetails();
     }  
-  }, [idToken]);
+  }, [idToken, setProfileData]);
 
-  content = (
-    <p>
-      Your profile is incomplete.
-      <span className="topnavspan" onClick={showModalHandler}>
-        Complete now
-      </span>
-      {showModal && <ProfileDetails closeModal={closeModal} />}
-    </p>
-  );
+  const profileDataHandler = (userName, url) => {
+    setProfileData({
+      userName: userName,
+      url:url
+    })
+  }
 
-  let profileData = JSON.parse(localStorage.getItem('profileObj')) || [];
-  
   if(profileData.userName !== undefined && profileData.url !== undefined) {
     content = (
       <p>
-        <img className="profile" src={profileData.url} alt="" onClick={showModalHandler}/>
-        {profileData.userName}
+        <img className="profile" src={profileData.url} alt=""/>
+        <span onClick={showModalHandler}>{profileData.userName}</span>
+        {showModal && <ProfileDetails sendProfiledata={profileDataHandler} closeModal={closeModal} />}
+      </p>
+    );
+  }else {
+    content = (
+      <p>
+        Your profile is incomplete.
+        <span className="topnavspan" onClick={showModalHandler}>
+          Complete now
+        </span>
+        {showModal && <ProfileDetails sendProfiledata={profileDataHandler} closeModal={closeModal} />}
       </p>
     );
   }

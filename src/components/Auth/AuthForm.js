@@ -69,7 +69,7 @@ const Signup = () => {
           console.log('error')
           throw new Error(errorData.error.message);
         }
-        console.log("successful", data);
+        // console.log("successful", data);
         enteredEmail.current.value = "";
         enteredPassword.current.value = "";
       }
