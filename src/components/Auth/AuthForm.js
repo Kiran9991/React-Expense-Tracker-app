@@ -60,6 +60,7 @@ const Signup = () => {
         const data = await res.json();
         if (res.ok && action === 'Sign Up') {
           alert(`Successfully created your account`);
+          setAction('Login');
         }else if(res.ok && action === 'Login') {
           alert(`Successfully Logged in`)
           authCtx.login(data.idToken)
