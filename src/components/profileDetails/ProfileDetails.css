@@ -2,6 +2,8 @@
   padding: 2px 16px;
   background-color: #1a17b3;
   color: white;
+  font-size: 0.9rem;
+  font-family: 'Work Sans', sans-serif;
 }
 
 .modal-body {
@@ -13,18 +15,6 @@
   color: white;
   padding: 20px;
   text-align: right;
-}
-
-.modal-content {
-  position: relative;
-  background-color: #fefefe;
-  margin: auto;
-  padding: 0;
-  border: 1px solid #888;
-  width: 80%;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  animation-name: animatetop;
-  animation-duration: 0.4s;
 }
 
 @keyframes animatetop {
@@ -41,6 +31,8 @@
 label {
   display: block;
   margin-bottom: 8px;
+  font-weight: 400;
+  font-family: "Source Serif Pro", serif;
 }
 
 input {
@@ -56,12 +48,13 @@ button {
   background-color: #0b022c;
   color: #fff;
   border: none;
-  border-radius: 20px;
+  border-radius: 10px;
   cursor: pointer;
   padding-top: 10px;
   padding-bottom: 10px;
   padding-left: 50px;
   padding-right: 50px;
+  margin-left: 10px;
 }
 
 button :hover {
