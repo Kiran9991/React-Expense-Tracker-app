@@ -5,6 +5,7 @@ import AuthForm from "./components/Auth/AuthForm";
 import MainNavigation from "./components/Navigation/MainNavigation";
 import Home from "./components/home/Home";
 import AuthContext from "./components/store/auth-context";
+import ForgotPassword from "./components/Auth/forgotPassword/ForgotPassword";
 
 function App() {
   const authCtx = useContext(AuthContext);
@@ -19,6 +20,9 @@ function App() {
         {!authCtx.isLoggedIn && <Route path='/auth'>
           <AuthForm />
         </Route>}
+        <Route path='/forgot-password'>
+          <ForgotPassword/>
+        </Route>
       </Switch>
     </Fragment>
   );

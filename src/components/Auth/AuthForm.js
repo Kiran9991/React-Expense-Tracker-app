@@ -4,7 +4,8 @@ import email_icon from '../assets/email.png';
 import password_icon from '../assets/password.png';
 import "./AuthForm.css";
 import AuthContext from "../store/auth-context";
-import { useHistory } from "react-router-dom";
+import { useHistory, NavLink } from "react-router-dom";
+
 
 function validatePassWord(password, confirmPassword) {
   if (password.length < 6 || password !== confirmPassword) return false;
@@ -123,9 +124,10 @@ const Signup = () => {
         {loading ? (
           <p>Submitting form data....</p>
         ) : (
+          [action === 'Login' && <NavLink to='/forgot-password'>Forgot Password?</NavLink>,
           <button className="submitBtn" onClick={submitFormHandler}>
             Submit
-          </button>
+          </button>]
         )}
       </div>
       <div className="submit-container">
