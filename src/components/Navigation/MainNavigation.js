@@ -78,6 +78,9 @@ const MainNavigation = () => {
       <NavLink to="/home" activeClassName="active">
         Home
       </NavLink>
+      <NavLink to='/expense-form' activeClassName='active'>
+        Expense
+      </NavLink>
       {!authCtx.isLoggedIn && (
         <NavLink to="/auth" activeClassName="active">
           Login

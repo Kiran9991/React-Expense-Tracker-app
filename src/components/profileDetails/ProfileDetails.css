@@ -1,6 +1,6 @@
 .modal-header {
   padding: 2px 16px;
-  background-color: #1a17b3;
+  background-color: #616164;
   color: white;
   font-size: 0.9rem;
   font-family: 'Work Sans', sans-serif;
@@ -11,7 +11,7 @@
 }
 
 .modal-footer {
-  background-color: #1a17b3;
+  background-color: #616164;
   color: white;
   padding: 20px;
   text-align: right;
@@ -45,8 +45,8 @@ input {
 }
 
 button {
-  background-color: #0b022c;
-  color: #fff;
+  background-color: #45a049;
+  color: black;
   border: none;
   border-radius: 10px;
   cursor: pointer;

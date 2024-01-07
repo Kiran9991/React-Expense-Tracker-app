@@ -6,6 +6,7 @@ import MainNavigation from "./components/Navigation/MainNavigation";
 import Home from "./components/home/Home";
 import AuthContext from "./components/store/auth-context";
 import ForgotPassword from "./components/Auth/forgotPassword/ForgotPassword";
+import ExpenseForm from "./components/ExpenseForm/ExpenseForm";
 
 function App() {
   const authCtx = useContext(AuthContext);
@@ -20,9 +21,12 @@ function App() {
         {!authCtx.isLoggedIn && <Route path='/auth'>
           <AuthForm />
         </Route>}
-        <Route path='/forgot-password'>
+        {!authCtx.isLoggedIn && <Route path='/forgot-password'>
           <ForgotPassword/>
-        </Route>
+        </Route>}
+        {authCtx.isLoggedIn && <Route path="/expense-form">
+          <ExpenseForm/>
+        </Route>}
       </Switch>
     </Fragment>
   );
