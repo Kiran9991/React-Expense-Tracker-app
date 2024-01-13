@@ -3,11 +3,16 @@ import React, { useEffect, useState } from "react";
 const ExpenseContext = React.createContext({
   expenses: [],
   addExpense: (expense) => {},
+  deleteExpense: (id) => {},
+  isEdit: false,
+  setIsEdit: (val) => {},
+  editExpense: (id, data) => {},
 });
 
 export const ExpenseContextProvider = (props) => {
   const [expenses, setExpenses] = useState([]);
   const token = localStorage.getItem('token');
+  const [isEdit, setIsEdit] = useState(false);
 
   useEffect(() => {
     async function getExpenses() {
@@ -16,7 +21,7 @@ export const ExpenseContextProvider = (props) => {
         const data = await res.json();
         let expensesArrObj = [];
         for(let obj in data) {
-          expensesArrObj.push(data[obj]);
+          expensesArrObj.push({...data[obj], id:obj});
         }
         setExpenses([...expensesArrObj]);
       } catch(err) {
@@ -47,9 +52,36 @@ export const ExpenseContextProvider = (props) => {
     }
   };
 
+  const deleteExpenseHandler = async (id) => {
+    try {
+      const res = await fetch(`https://expensetracker-6f9fd-default-rtdb.firebaseio.com/expenses/${id}.json`, {
+        method: 'DELETE',
+        headers: {
+          "Content-Type": "application/json",
+        }
+      })
+      if(res.ok) {
+        console.log('successfully deleted!', id);
+      setExpenses((prev) => prev.filter((item) => item.id !== id));
+      }
+    }catch (err) {
+      console.log(err)
+    }
+  }
+
+  const setIsEditHandler = (val) => setIsEdit(val);
+
+  const editExpenseHandler = async () => {
+  
+  }
+
   const expenseValue = {
     expenses: expenses,
     addExpense: addExpenseHandler,
+    deleteExpense: deleteExpenseHandler,
+    editExpense: editExpenseHandler,
+    isEdit: isEdit,
+    setIsEdit: setIsEditHandler
   };
 
   return (

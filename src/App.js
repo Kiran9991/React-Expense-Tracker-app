@@ -7,7 +7,7 @@ import Home from "./components/home/Home";
 import AuthContext from "./components/store/auth-context";
 import ForgotPassword from "./components/Auth/forgotPassword/ForgotPassword";
 import ExpenseForm from "./components/ExpenseForm/ExpenseForm";
-import ExpensesList from "./components/Expenses/ExpensesList";
+import ExpensesList from "./components/Expenses/Lists/ExpensesList";
 
 function App() {
   const authCtx = useContext(AuthContext);

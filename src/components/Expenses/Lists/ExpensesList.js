@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 
 import "./ExpensesList.css";
-import ExpenseItem from "./ExpenseItem";
-import ExpenseContext from "../store/expense-context";
+import ExpenseItem from "../Item/ExpenseItem";
+import ExpenseContext from "../../store/expense-context";
 
 const ExpensesList = () => {
   const expenseCtx = useContext(ExpenseContext)
@@ -15,6 +15,8 @@ const ExpensesList = () => {
     <ul className="expenses-list">
       {expenseCtx.expenses.map((item) => 
         <ExpenseItem 
+        key={item.id}
+        id={item.id}
         title={item.title}
         amount={item.amount}
         category={item.category}
