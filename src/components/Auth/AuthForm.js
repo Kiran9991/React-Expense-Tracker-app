@@ -43,9 +43,9 @@ const Signup = () => {
       } else {
         let url;
         if(action === 'Sign Up') {
-          url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyC8IykqejjI79ePKYsCrYciX6Vs8G6nySI`;
+          url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBBUlZNpTUE3QeJz8SoVxljlA-TggPXpac`;
         }else {
-          url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyC8IykqejjI79ePKYsCrYciX6Vs8G6nySI`
+          url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBBUlZNpTUE3QeJz8SoVxljlA-TggPXpac`
         }
         const res = await fetch(url, {
           method: "POST",
@@ -66,6 +66,10 @@ const Signup = () => {
           alert(`Successfully Logged in`)
           authCtx.login(data.idToken)
           history.replace('/home')
+        }else if(action === 'Login' && !res.ok) {
+          enteredEmail.current.value = "";
+          enteredPassword.current.value = "";
+          throw new Error(data.error.message)
         } else {
           const errorData = await res.json();
           console.log('error')

@@ -14,13 +14,7 @@ const ExpensesList = () => {
   return (
     <ul className="expenses-list">
       {expenseCtx.expenses.map((item) => 
-        <ExpenseItem 
-        key={item.id}
-        id={item.id}
-        title={item.title}
-        amount={item.amount}
-        category={item.category}
-        />
+        <ExpenseItem key={item.id} item={item}/>
       )}
     </ul>
   );

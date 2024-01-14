@@ -5,33 +5,36 @@ const ExpenseContext = React.createContext({
   addExpense: (expense) => {},
   deleteExpense: (id) => {},
   isEdit: false,
-  setIsEdit: (val) => {},
   editExpense: (id, data) => {},
+  editDetails: {},
 });
 
 export const ExpenseContextProvider = (props) => {
   const [expenses, setExpenses] = useState([]);
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   const [isEdit, setIsEdit] = useState(false);
+  const [editData, setEditData] = useState({});
 
   useEffect(() => {
     async function getExpenses() {
       try {
-        const res = await fetch(`https://expensetracker-6f9fd-default-rtdb.firebaseio.com/expenses.json`);
+        const res = await fetch(
+          `https://expensetracker-6f9fd-default-rtdb.firebaseio.com/expenses.json`
+        );
         const data = await res.json();
         let expensesArrObj = [];
-        for(let obj in data) {
-          expensesArrObj.push({...data[obj], id:obj});
+        for (let obj in data) {
+          expensesArrObj.push({ ...data[obj], id: obj });
         }
         setExpenses([...expensesArrObj]);
-      } catch(err) {
+      } catch (err) {
         console.log(err);
       }
     }
-    if(token) {
+    if (token) {
       getExpenses();
     }
-  },[token])
+  }, [token]);
 
   const addExpenseHandler = async (expense) => {
     try {
@@ -54,26 +57,30 @@ export const ExpenseContextProvider = (props) => {
 
   const deleteExpenseHandler = async (id) => {
     try {
-      const res = await fetch(`https://expensetracker-6f9fd-default-rtdb.firebaseio.com/expenses/${id}.json`, {
-        method: 'DELETE',
-        headers: {
-          "Content-Type": "application/json",
+      const res = await fetch(
+        `https://expensetracker-6f9fd-default-rtdb.firebaseio.com/expenses/${id}.json`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-      })
-      if(res.ok) {
-        console.log('successfully deleted!', id);
-      setExpenses((prev) => prev.filter((item) => item.id !== id));
+      );
+      if (res.ok) {
+        console.log("successfully deleted!", id);
+        setExpenses((prev) => prev.filter((item) => item.id !== id));
+        setIsEdit(false);
       }
-    }catch (err) {
-      console.log(err)
+    } catch (err) {
+      console.log(err);
     }
-  }
+  };
 
-  const setIsEditHandler = (val) => setIsEdit(val);
-
-  const editExpenseHandler = async () => {
-  
-  }
+  const editExpenseHandler = async (id, updatedData) => {
+    setIsEdit(true);
+    setEditData(updatedData);
+    deleteExpenseHandler(id);
+  };
 
   const expenseValue = {
     expenses: expenses,
@@ -81,7 +88,7 @@ export const ExpenseContextProvider = (props) => {
     deleteExpense: deleteExpenseHandler,
     editExpense: editExpenseHandler,
     isEdit: isEdit,
-    setIsEdit: setIsEditHandler
+    editDetails: editData,
   };
 
   return (

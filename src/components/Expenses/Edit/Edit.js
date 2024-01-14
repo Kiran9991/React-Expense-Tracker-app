@@ -1,11 +1,19 @@
+import { useContext } from "react";
+import "./Edit.css";
+import ExpenseContext from "../../store/expense-context";
 
+const Edit = ({ item }) => {
+  const expenseCtx = useContext(ExpenseContext);
 
-import './Edit.css';
+  const editHandler = () => {
+    expenseCtx.editExpense(item.id, item);
+  };
 
-const Edit = () => {
-    return (<button className="expense-item__edit">
-        Edit
-    </button>)
-}
+  return (
+    <button className="expense-item__edit" onClick={editHandler}>
+      Edit
+    </button>
+  );
+};
 
 export default Edit;

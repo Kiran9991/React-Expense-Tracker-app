@@ -15,7 +15,7 @@ const ProfileDetails = (props) => {
       const profilePhotoUrl = profilePhotoRef.current.value;
       const idToken = localStorage.getItem("token");
       const res = await fetch(
-        `https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyC8IykqejjI79ePKYsCrYciX6Vs8G6nySI`,
+        `https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyBBUlZNpTUE3QeJz8SoVxljlA-TggPXpac`,
         {
           method: "POST",
           body: JSON.stringify({

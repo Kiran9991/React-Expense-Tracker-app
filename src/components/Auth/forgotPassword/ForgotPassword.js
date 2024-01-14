@@ -13,7 +13,7 @@ const ForgotPassword = () => {
         e.preventDefault();
         setIsLoading(true);
         try{
-        const res = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyC8IykqejjI79ePKYsCrYciX6Vs8G6nySI`, {
+        const res = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyBBUlZNpTUE3QeJz8SoVxljlA-TggPXpac`, {
           method: "POST",
           headers: {
             "content-type": "application/json",

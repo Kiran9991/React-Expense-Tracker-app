@@ -25,7 +25,7 @@ const MainNavigation = () => {
   useEffect(() => {
     async function getProfileUpdateDetails() {
       const res = await fetch(
-        `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyC8IykqejjI79ePKYsCrYciX6Vs8G6nySI`,
+        `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyBBUlZNpTUE3QeJz8SoVxljlA-TggPXpac`,
         {
           method: "POST",
           headers: {
