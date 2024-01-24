@@ -1,21 +1,22 @@
-import React, { useContext } from "react";
+import { useSelector } from 'react-redux';
 
 import "./ExpensesList.css";
 import ExpenseItem from "../Item/ExpenseItem";
-import ExpenseContext from "../../store/expense-context";
+import TotalAmount from '../Total/TotolAmount';
 
 const ExpensesList = () => {
-  const expenseCtx = useContext(ExpenseContext)
+  const expenses = useSelector(state => state.expense.expenses);
 
-  if (expenseCtx.expenses.length === 0) {
+  if (expenses.length === 0) {
     return <h2 className="expenses-list_fallback">Found no expenses.</h2>;
   }
 
   return (
     <ul className="expenses-list">
-      {expenseCtx.expenses.map((item) => 
+      {expenses.map((item) => 
         <ExpenseItem key={item.id} item={item}/>
       )}
+      <TotalAmount/>
     </ul>
   );
 };

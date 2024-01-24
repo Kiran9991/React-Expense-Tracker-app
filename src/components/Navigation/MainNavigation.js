@@ -1,16 +1,21 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
 
 import "./MainNavigation.css";
 import ProfileDetails from "../profileDetails/ProfileDetails";
-import AuthContext from "../store/auth-context";
+import { authActions } from '../store/auth';
 
 const MainNavigation = () => {
   const [showModal, setShowModal] = useState(false);
-  const authCtx = useContext(AuthContext);
+  const [ profileData, setProfileData ] = useState({});
+
+  const isAuth = useSelector(state => state.auth.isAuthenticated);
+  const isPremium = useSelector((state) => state.auth.isPremium);
+  const dispatch = useDispatch();
   const history = useHistory();
   const idToken = localStorage.getItem("token");
-  const [ profileData, setProfileData ] = useState({});
+  
   let content;
 
   const showModalHandler = () => setShowModal(true);
@@ -18,7 +23,8 @@ const MainNavigation = () => {
   const closeModal = () => setShowModal(false);
 
   const logoutHandler = () => {
-    authCtx.logout();
+    dispatch(authActions.logout());
+    dispatch(authActions.removeToken());
     history.replace("/auth");
   };
 
@@ -78,18 +84,19 @@ const MainNavigation = () => {
       <NavLink to="/home" activeClassName="active">
         Home
       </NavLink>
-      {authCtx.isLoggedIn && <NavLink to='/expense-form' activeClassName='active'>
+      {isAuth && <NavLink to='/expense-form' activeClassName='active'>
         Expense
       </NavLink>}
-      {!authCtx.isLoggedIn && (
+      {!isAuth && (
         <NavLink to="/auth" activeClassName="active">
           Login
         </NavLink>
       )}
-      {authCtx.isLoggedIn && (
+      {isAuth && (
         <div className="topnavright">
+          {isPremium && <button className="navBtn">Activate Premium</button>}
           {content}
-          <button onClick={logoutHandler}>Logout</button>
+          <button className="navBtn" onClick={logoutHandler}>Logout</button>
         </div>
       )}
     </header>

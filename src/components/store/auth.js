@@ -1,0 +1,38 @@
+import { createSlice } from '@reduxjs/toolkit';
+
+const token = localStorage.getItem("token");
+
+const initialAuthState = {
+    token: token || '',
+    isAuthenticated: !!token,
+    isPremium: null
+}
+
+const authSlice = createSlice({
+    name: 'authenticated',
+    initialState: initialAuthState,
+    reducers: {
+        updateToken(state, action) {
+            state.token = action.payload;
+            localStorage.setItem("token", action.payload);
+        },
+        removeToken(state) {
+            state.token = ''
+            localStorage.removeItem('token');
+        },
+        login(state) {
+            state.isAuthenticated =  true;
+        },
+        logout(state) {
+            state.isAuthenticated = false;
+            state.isPremium = false
+        },
+        setIsPremium(state) {
+            state.isPremium = true
+        }
+    }
+})
+
+export const authActions = authSlice.actions;
+
+export default authSlice.reducer;

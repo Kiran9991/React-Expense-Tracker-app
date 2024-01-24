@@ -1,31 +1,32 @@
-import React, { Fragment, useContext } from "react";
+import React, { Fragment } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
+import { useSelector } from 'react-redux';
 
 import AuthForm from "./components/Auth/AuthForm";
 import MainNavigation from "./components/Navigation/MainNavigation";
 import Home from "./components/home/Home";
-import AuthContext from "./components/store/auth-context";
 import ForgotPassword from "./components/Auth/forgotPassword/ForgotPassword";
 import ExpenseForm from "./components/ExpenseForm/ExpenseForm";
 import ExpensesList from "./components/Expenses/Lists/ExpensesList";
 
 function App() {
-  const authCtx = useContext(AuthContext);
+  const isAuth = useSelector((state) => state.auth.isAuthenticated);
+
   return (
     <Fragment>
       <MainNavigation />
       <Switch>
         <Route path='/home'>
           <Home/>
-          {!authCtx.isLoggedIn && <Redirect to='/auth'/>}
+          {!isAuth && <Redirect to='/auth'/>}
         </Route>
-        {!authCtx.isLoggedIn && <Route path='/auth'>
+        {!isAuth && <Route path='/auth'>
           <AuthForm />
         </Route>}
-        {!authCtx.isLoggedIn && <Route path='/forgot-password'>
+        {!isAuth && <Route path='/forgot-password'>
           <ForgotPassword/>
         </Route>}
-        {authCtx.isLoggedIn && <Route path="/expense-form">
+        {isAuth && <Route path="/expense-form">
           <ExpenseForm/>
           <ExpensesList/>
         </Route>}

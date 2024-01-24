@@ -1,12 +1,13 @@
-import { useContext } from "react";
+import { useDispatch } from 'react-redux';
+
 import "./Delete.css";
-import ExpenseContext from "../../store/expense-context";
+import { expenseActions } from "../../store/expense";
 
 const Delete = ({ id }) => {
-  const expenseCtx = useContext(ExpenseContext);
+  const dispatch = useDispatch();
 
   const deleteHandler = async () => {
-    expenseCtx.deleteExpense(id);
+    dispatch(expenseActions.deleteExpense(id));
   };
   
   return (

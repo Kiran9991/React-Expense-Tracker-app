@@ -1,10 +1,11 @@
-import { useState, useRef, useContext } from "react";
+import { useState, useRef } from "react";
 
 import email_icon from '../assets/email.png';
 import password_icon from '../assets/password.png';
 import "./AuthForm.css";
-import AuthContext from "../store/auth-context";
 import { useHistory, NavLink } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { authActions } from '../store/auth';
 
 
 function validatePassWord(password, confirmPassword) {
@@ -22,8 +23,10 @@ function validateEmail(email) {
 const Signup = () => {
   const [action, setAction] = useState("Sign Up");
   const [loading, setIsLoading] = useState(false);
-  const authCtx = useContext(AuthContext);
+
+  const dispatch = useDispatch();
   const history = useHistory();
+
   const enteredEmail = useRef();
   const enteredPassword = useRef();
   const enteredConfirmPassword = useRef();
@@ -64,7 +67,8 @@ const Signup = () => {
           setAction('Login');
         }else if(res.ok && action === 'Login') {
           alert(`Successfully Logged in`)
-          authCtx.login(data.idToken)
+          dispatch(authActions.login());
+          dispatch(authActions.updateToken(data.idToken));
           history.replace('/home')
         }else if(action === 'Login' && !res.ok) {
           enteredEmail.current.value = "";

@@ -1,12 +1,13 @@
-import { useContext } from "react";
+import { useDispatch } from 'react-redux';
+
 import "./Edit.css";
-import ExpenseContext from "../../store/expense-context";
+import { expenseActions } from "../../store/expense";
 
 const Edit = ({ item }) => {
-  const expenseCtx = useContext(ExpenseContext);
+  const dispatch = useDispatch();
 
   const editHandler = () => {
-    expenseCtx.editExpense(item.id, item);
+    dispatch(expenseActions.editExpense(item));
   };
 
   return (

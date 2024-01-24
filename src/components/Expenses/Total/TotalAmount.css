@@ -1,0 +1,11 @@
+.amountUI {
+    margin: 5px;
+    padding: 1px;
+}
+
+.amountDescription {
+    background: #a69dd7;
+    display: flex;
+    justify-content: center;
+    border-radius: 10px;
+}

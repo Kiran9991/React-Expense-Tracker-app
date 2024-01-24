@@ -1,17 +1,21 @@
-import React, { useContext, useRef } from "react";
+import React, { useRef } from "react";
+import { useSelector, useDispatch } from 'react-redux';
 
 import "./ExpenseForm.css";
-import ExpenseContext from "../store/expense-context";
+import { expenseActions } from "../store/expense"; 
 
 const ExpenseForm = () => {
-  const expenseCtx = useContext(ExpenseContext);
+  const dispatch = useDispatch();
+  const isEdit = useSelector(state => state.expense.isEdit);
+  const editDetails = useSelector(state => state.expense.editDetails);
+
   const enteredTitle = useRef();
   const enteredAmount = useRef();
   const enteredCategory = useRef();
 
-  if (expenseCtx.isEdit) {
-    const editData = expenseCtx.editDetails;
-    enteredTitle.current.value = `${editData.title}`;
+  if (isEdit) {
+    const editData = editDetails;
+    enteredTitle.current.value = editData.title;
     enteredAmount.current.value = editData.amount;
     enteredCategory.current.value = editData.category;
   }
@@ -26,7 +30,7 @@ const ExpenseForm = () => {
       amount,
       category,
     };
-    expenseCtx.addExpense(expenseObj);
+    dispatch(expenseActions.addExpense(expenseObj));
     enteredTitle.current.value = "";
     enteredAmount.current.value = "";
     enteredCategory.current.value = "";
