@@ -33,11 +33,16 @@ const Signup = () => {
 
   const submitFormHandler = async (e) => {
     e.preventDefault();
+
     const email = enteredEmail.current.value;
     const password = enteredPassword.current.value;
+
     let confirmPassword;
+
     if(action==='Sign Up') confirmPassword = enteredConfirmPassword.current.value;
+
     setIsLoading(true);
+
     try {
       if (!validateEmail(email)) {
         alert(`Please enter valid Email`);
@@ -61,7 +66,9 @@ const Signup = () => {
             "content-type": "application/json",
           },
         });
+
         const data = await res.json();
+        
         if (res.ok && action === 'Sign Up') {
           alert(`Successfully created your account`);
           setAction('Login');
@@ -80,6 +87,7 @@ const Signup = () => {
           throw new Error(errorData.error.message);
         }
         // console.log("successful", data);
+        localStorage.setItem('userEmail', JSON.stringify(data.email));
         enteredEmail.current.value = "";
         enteredPassword.current.value = "";
       }

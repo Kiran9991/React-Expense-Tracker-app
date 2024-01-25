@@ -11,6 +11,7 @@ const MainNavigation = () => {
   const [ profileData, setProfileData ] = useState({});
 
   const isAuth = useSelector(state => state.auth.isAuthenticated);
+  const showPremium = useSelector((state) => state.auth.showPremium);
   const isPremium = useSelector((state) => state.auth.isPremium);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -59,6 +60,10 @@ const MainNavigation = () => {
     })
   }
 
+  const premiumHandler = () => {
+    dispatch(authActions.setIsPremium());
+  }
+
   if(profileData.userName !== undefined && profileData.url !== undefined) {
     content = (
       <p>
@@ -80,7 +85,7 @@ const MainNavigation = () => {
   }
 
   return (
-    <header className="topnav">
+    <header className='topnav'>
       <NavLink to="/home" activeClassName="active">
         Home
       </NavLink>
@@ -94,7 +99,8 @@ const MainNavigation = () => {
       )}
       {isAuth && (
         <div className="topnavright">
-          {isPremium && <button className="navBtn">Activate Premium</button>}
+          {showPremium && <button className="navBtn1" onClick={premiumHandler}>
+            {isPremium ? 'Your are now Premium User': 'ActivatePremium'}</button>}
           {content}
           <button className="navBtn" onClick={logoutHandler}>Logout</button>
         </div>

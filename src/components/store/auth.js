@@ -5,7 +5,8 @@ const token = localStorage.getItem("token");
 const initialAuthState = {
     token: token || '',
     isAuthenticated: !!token,
-    isPremium: null
+    showPremium: false,
+    isPremium: false
 }
 
 const authSlice = createSlice({
@@ -25,7 +26,11 @@ const authSlice = createSlice({
         },
         logout(state) {
             state.isAuthenticated = false;
+            state.showPremium = false;
             state.isPremium = false
+        },
+        setShowPremium(state, action) {
+            state.showPremium = action.payload;
         },
         setIsPremium(state) {
             state.isPremium = true
