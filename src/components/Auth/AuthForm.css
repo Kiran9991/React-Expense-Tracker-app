@@ -1,6 +1,5 @@
 body {
     height: 100vh;
-    /* background: linear-gradient(#2A00B7, #42006C); */
 }
 
 .container {
@@ -66,6 +65,7 @@ body {
     outline: none;
     color: black;
     font-size: 14px;
+    padding-top: 20px;
 }
 
 .forgot-password {
