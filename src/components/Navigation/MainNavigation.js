@@ -3,7 +3,7 @@ import { NavLink, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 
 import "./MainNavigation.css";
-import ProfileDetails from "../profileDetails/ProfileDetails";
+import ProfileDetails from "../ProfileDetails/ProfileDetails";
 import { authActions } from '../store/auth';
 
 const MainNavigation = () => {

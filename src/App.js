@@ -1,16 +1,38 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
-import AuthForm from "./components/Auth/AuthForm";
+import AuthForm from './components/Auth/Form/AuthForm';
 import MainNavigation from "./components/Navigation/MainNavigation";
-import Home from "./components/home/Home";
+import Home from "./components/Home/Home";
 import ForgotPassword from "./components/Auth/forgotPassword/ForgotPassword";
 import ExpenseForm from "./components/ExpenseForm/ExpenseForm";
 import ExpensesList from "./components/Expenses/Lists/ExpensesList";
+import { fetchExpenses } from "./components/store/expense-action";
+import { sendExpensesData } from "./components/store/expense-action";
+
+let isInitial = true;
 
 function App() {
+  const dispatch = useDispatch();
   const isAuth = useSelector((state) => state.auth.isAuthenticated);
+  const expenses = useSelector((state) => state.expense.expenses);
+  const token = localStorage.getItem('token');
+
+  useEffect(() => {
+    if(token) {
+      dispatch(fetchExpenses());
+    }
+  }, [dispatch, token]);
+
+  useEffect(() => {
+    if(isInitial) {
+      isInitial = false;
+      return;
+    }
+    
+    dispatch(sendExpensesData(expenses))
+  }, [expenses, dispatch])
 
   return (
     <Fragment>

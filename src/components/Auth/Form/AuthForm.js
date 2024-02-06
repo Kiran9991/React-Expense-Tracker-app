@@ -1,12 +1,11 @@
 import { useState, useRef } from "react";
 
-import email_icon from '../assets/email.png';
-import password_icon from '../assets/password.png';
+import email_icon from '../../assets/email.png';
+import password_icon from '../../assets/password.png';
 import "./AuthForm.css";
 import { useHistory, NavLink } from "react-router-dom";
 import { useDispatch } from 'react-redux';
-import { authActions } from '../store/auth';
-
+import { authActions } from '../../store/auth';
 
 function validatePassWord(password, confirmPassword) {
   if (password.length < 6 || password !== confirmPassword) return false;

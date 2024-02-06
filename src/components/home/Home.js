@@ -1,5 +1,5 @@
 
-import VerifyEmail from '../verification/VerifyEmail';
+import VerifyEmail from '../Verification/VerifyEmail';
 import './Home.css';
 
 const Home = () => {
